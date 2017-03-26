@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}All{% endblock %}
+
+{% block content %}
+    {%  for subject in subject_list %}
+        <h5><a href="{% url 'reports:report_detail' pk=subject.pk %}">{{ subject.title }}</a></h5>
+
+        {{ subject.description }}
+    {% endfor %}
+{% endblock %}

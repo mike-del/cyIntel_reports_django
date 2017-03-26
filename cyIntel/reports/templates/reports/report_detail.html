@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}Report Detail{% endblock %}
+
+{% block content %}
+	{% for report in reports %}
+		<h2>{{ report.title }}</h2>
+		<p>{{ report.created_at }}</p>
+		<p>{{ report.content }}</p>
+	{% endfor %}
+{% endblock %}
