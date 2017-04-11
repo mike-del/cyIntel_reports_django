@@ -1,11 +1,31 @@
 {% extends "layout.html" %}
 
+
 {% block title %}All{% endblock %}
 
+
 {% block content %}
+
     {%  for subject in subject_list %}
-        <h5><a href="{% url 'reports:report_detail' pk=subject.pk %}">{{ subject.title }}</a></h5>
+
+        <h2>{{ subject.title }}</h2>
+        <p><a href="{% url 'reports:subject_reports' pk=subject.pk %}">[see all]</a></p>
 
         {{ subject.description }}
+        <form method="GET" action="{% url 'reports:subject_reports' pk=subject.pk %}">
+
+			{% csrf_token %}
+			Enter a start date:<br>
+			<input type="date" name="start_date"><br><br>
+
+			Enter an end date:<br>
+			<input type="date" name="end_date"><br><br>
+
+			<input type="submit"> 
+
+		</form>
+		<br>
+
     {% endfor %}
+
 {% endblock %}

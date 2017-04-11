@@ -1,19 +1,22 @@
-from itertools import chain
-
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 
 from . import models
 
-
 def subject_list(request):
-    subject_list = models.Subject.objects.all()
-    return render(request, 'reports/subject_list.html',
-    	{'subject_list': subject_list})
+	'''Lists all available subjects'''
+	subject_list = models.Subject.objects.all()
+	return render(request, 'reports/subject_list.html',
+		{'subject_list': subject_list})
 
-
-def report_detail(request, pk):
-	reports = models.Report.objects.filter(subject=pk)
-	return render(request, 'reports/report_detail.html', {'reports': reports})
+def subject_reports(request, pk):
+	'''Show all or a selected date range of
+	reports for a given subject'''
+	start_date = request.GET.get('start_date')
+	end_date = request.GET.get('end_date')
+	if end_date:
+		reports = models.Report.objects.filter(
+		date__range=[start_date, end_date], subject=pk)
+	else:
+		reports = models.Report.objects.filter(subject=pk)
+	return render(request, 'reports/subject_reports.html',
+		{'reports': reports})

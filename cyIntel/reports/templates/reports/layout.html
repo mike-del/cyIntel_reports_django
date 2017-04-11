@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+	
+	{{ block.super }}
+
+
+	<form method="GET" action="{% url 'reports:report_search' %}">
+
+		{% csrf_token %}
+		Enter a start date:<br>
+		<input type="date" name="start_date"><br><br>
+
+		Enter an end date:<br>
+		<input type="date" name="end_date"><br><br>
+
+		{% block search_form %}{% endblock %}
+		<input type="submit"> 
+
+	</form>
+	
+ 
+{% endblock %}
